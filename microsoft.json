@@ -1,0 +1,6 @@
+{
+	"name": "Microsoft",
+	"id": "515a4376-ac30-4ed2-801f-a876c0d56c93",
+	"dataURL": "http://vladm-prod.apigee.net/chat-key/v2/chats/",
+	"context": "demo"
+}
