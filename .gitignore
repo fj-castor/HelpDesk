@@ -1,0 +1,9 @@
+Resources
+build
+.DS_Store
+build.log
+npm-debug.log
+tmp
+.map
+/.settings/
+/nbproject/private/
