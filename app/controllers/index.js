@@ -2,9 +2,6 @@ function doClick(e) {
 	alert($.label.text);
 }
 
-var main = Alloy.createController('main');
-//main.getView().open();
-
 $.index.open();
 
 
@@ -21,15 +18,16 @@ function requestChat(name, subject, json) {
 			Ti.API.warn("Request chat" + resp);
 			chatId = resp.id;
 			path = resp.path;
-			Ti.API.error("Chat is active!");
-				
+			alert("Chat is active!");
+			
+			
 			var timeout;
 			function doSomething() {
 				getTranscript();
-				timeout = setTimeout(doSomething, 1000);
+				timeout = setTimeout(doSomething, 5000);
 			}
 
-			timeout = setTimeout(doSomething, 1000); 
+			timeout = setTimeout(doSomething, 5000); 
 
 		},
 		// function called when an error occurs, including a timeout
@@ -169,13 +167,6 @@ function getTranscript() {
 		onload : function(e) {
 			Ti.API.warn(this.responseText);
 			var resp = JSON.parse(this.responseText);
-			
-			var serverReply = responceCheck(resp);
-			
-			if (serverReply) {
-				showReply(serverReply);
-			}
-				
 			//Ti.API.warn("Chat complete" + resp);
 		},
 		// function called when an error occurs, including a timeout
@@ -211,10 +202,11 @@ function sendReply() {
 		right : '70dp',
 		borderRadius : 5,
 		font : {
-			fontSize : 14,
-			fontFamily:'Helvetica Neue'
+			fontSize : 14
 		}
 	});
+
+	//var msgCon
 
 	var circle = Ti.UI.createImageView({
 		width : 43,
@@ -240,7 +232,7 @@ function sendReply() {
 
 	$.chatWin.scrollToBottom();
 
-	//showReply($.messageBox.value + " to you too!");
+	showReply($.messageBox.value + " to you too!");
 	sendMessage("$.messageBox.value");
 	getChat();
 
@@ -257,10 +249,11 @@ function showReply(message) {
 		left : '70dp',
 		borderRadius : 5,
 		font : {
-			fontSize : 14,
-			fontFamily:'Helvetica Neue'
+			fontSize : 14
 		}
 	});
+
+	//var msgCon
 
 	var circle = Ti.UI.createImageView({
 		width : 43,
@@ -286,19 +279,8 @@ function showReply(message) {
 
 	$.chatWin.scrollToBottom();
 }
-
 requestChat("John", "Phone Help");
 
-function responceCheck (json) {
-	var str = '';
-	if (json.messages!='') {
-		if (json.messages[json.messages.length-1].from.nickname == 'system' )
-		{
-			str = json.messages[json.messages.length-1].text;
-		}
-	}
-	return (str!='') ? str : false;
-}
 
 
 
