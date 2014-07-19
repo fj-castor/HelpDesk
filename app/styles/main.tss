@@ -1,4 +1,28 @@
 
-".container" : {
-  
+".container": {
+	backgroundImage: 'bg.png'
+}
+
+"#start[platform=ios]": {
+	top: '290dp',
+	font: {
+		fontSize: '30dp'
+	}
+}
+".white-btn": {
+	font: {
+		fontSize: '20dp',
+		fontWeight: 'bold'
+	},
+	top: '20dp',
+	color: '#fff'
+}
+".white-btn-hide": {
+	font: {
+		fontSize: '20dp',
+		fontWeight: 'bold'
+	},
+	top: '20dp',
+	color: '#fff',
+	visible: false
 }
