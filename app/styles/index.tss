@@ -9,3 +9,8 @@
 	height: Ti.UI.SIZE,
 	color: "#000"
 } 
+"#messageBox": {
+	font: {
+		fontSize: '14dp'
+	}
+}

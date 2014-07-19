@@ -1,9 +1,13 @@
 <Alloy>
-	<Window class="container">
+	<Window class="container" navBarHidden='true'>
 		<!-- <Label id="label" onClick="doClick">Hello, World</Label> -->
-		<ScrollView id="box">
-			<ScrollView class="chatWin" id="chatWin" layout="vertical" top="0dp" backgroundColor="#ffffff" height="85%"></ScrollView>
-			<View class="messageBoxContainer" id="messageBoxContainer" layout="horizontal" height="15%" bottom="0dp">
+		<View class="navBar" id="navBar" height="44dp" top="20dp" width="100%" backgroundColor="#057387" >
+			<Button class="backBtn" id="backBtn" title="Back" color="#fff" left="10dp">
+			<Label class="title" id="chatTitle" text="TEST" color="#fff"></Label>
+		</View>
+		<ScrollView id="box" top='64dp'>
+			<ScrollView class="chatWin" id="chatWin" layout="vertical" top="0dp" backgroundColor="#ffffff" height="90%"></ScrollView>
+			<View class="messageBoxContainer" id="messageBoxContainer" layout="horizontal" height="10%" bottom="0dp">
 				<TextArea class="messageBox" backgroundColor="#cccccc" width="80%" id="messageBox" height="100%" />
 				<Button class="btn" id="submitBtn" width="20%" title="Enter" height="100%" backgroundColor="#eeeeee"/>
 			</View>

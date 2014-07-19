@@ -1,4 +1,24 @@
 <Alloy>
-	<View class="container">
-	</View>
+	<NavigationWindow id="navwin" platform="ios">
+		<Window class="win" navBarHidden='true'>
+			<View class="container" layout="vertical">
+
+				<Button class="white-btn" id="start" title="Need Help?" color="#fff"></Button>
+				<Button class="white-btn-hide" id="phoneBtn" title="My Phone Service" color="#fff"></Button>
+				<Button class="white-btn-hide" id="compBtn" title="My Internet Service" color="#fff"></Button>
+				<Button class="white-btn-hide" title="My TV Service" id="tvBtn"></Button>
+
+			</View>
+		</Window>
+	</NavigationWindow>
+	<Window class="win" navBarHidden='true' platform='android'>
+		<View class="container" layout="vertical">
+
+			<Button class="white-btn" id="start" title="Need Help?" color="#fff"></Button>
+			<Button class="white-btn-hide" id="phoneBtn" title="My Phone Service" color="#fff"></Button>
+			<Button class="white-btn-hide" id="compBtn" title="My PC Service" color="#fff"></Button>
+			<Button class="white-btn-hide" title="My TV Service" id="tvBtn"></Button>
+
+		</View>
+	</Window>
 </Alloy>

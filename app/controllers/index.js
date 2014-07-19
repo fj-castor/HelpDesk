@@ -2,12 +2,39 @@ function doClick(e) {
 	alert($.label.text);
 }
 
-$.index.open();
+var params = {
+	index: $.index
+};
 
+var profPic = 'prof2.jpg';
+
+var main = Alloy.createController('main', params);
+main.getView().open();
+
+function closeWindow() {
+	$.index.close();
+}
+
+Ti.App.addEventListener('from', function(e){
+	$.chatTitle.text = e.title;
+	profPic = e.img;
+});
+
+$.backBtn.addEventListener('click', function(){
+	clearTimeout(timeout);
+	removeMessages($.chatWin);
+	endChat();
+	closeWindow();
+});
+
+//$.index.open();
 
 var path = "";
 var baseUrl = "http://vladm-prod.apigee.net/chat-key/";
 var chatId = "";
+
+var doSomething;
+var timeout;
 
 function requestChat(name, subject, json) {
 	var url = baseUrl + "v2/chats";
@@ -18,17 +45,24 @@ function requestChat(name, subject, json) {
 			Ti.API.warn("Request chat" + resp);
 			chatId = resp.id;
 			path = resp.path;
-			alert("Chat is active!");
+			Ti.API.error("Chat is active!");
+				
 			
-			
-			var timeout;
-			function doSomething() {
-				getTranscript();
-				timeout = setTimeout(doSomething, 5000);
+			if($.chatTitle.text == 'Telus') {
+				showReply('How may I help you today?');
 			}
+			//else{
+			
+				doSomething = function() {
+					getTranscript();
+					timeout = setTimeout(doSomething, 1000);
+				};
 
-			timeout = setTimeout(doSomething, 5000); 
+				timeout = setTimeout(doSomething, 1000);
 
+		//	}
+			
+			
 		},
 		// function called when an error occurs, including a timeout
 		onerror : function(e) {
@@ -109,6 +143,23 @@ function sendMessage(message) {
 	}));
 }
 
+
+function removeMessages(view) {
+	if (view && view.children != undefined) {
+		// Save childrens
+		var removeData = [];
+		for ( i = view.children.length; i > 0; i--) {
+			removeData.push(view.children[i - 1]);
+		};
+
+		// Remove childrens
+		for ( i = 0; i < removeData.length; i++) {
+			view.remove(removeData[i]);
+		}
+		removeData = null;
+	};
+}
+
 function endChat() {
 	var url = baseUrl + "v2/chats"+"/"+chatId;
 	var client = Ti.Network.createHTTPClient({
@@ -167,6 +218,13 @@ function getTranscript() {
 		onload : function(e) {
 			Ti.API.warn(this.responseText);
 			var resp = JSON.parse(this.responseText);
+			
+			var serverReply = responceCheck(resp);
+			
+			if (serverReply) {
+				showReply(serverReply);
+			}
+				
 			//Ti.API.warn("Chat complete" + resp);
 		},
 		// function called when an error occurs, including a timeout
@@ -188,8 +246,18 @@ function getTranscript() {
 $.messageBox.focus();
 
 $.submitBtn.addEventListener('click', function() {
+	if($.messageBox.value != "") {
+			sendReply();
+
+	}
 	Ti.API.info("CLICKED");
-	sendReply();
+});
+
+$.messageBox.addEventListener('return', function(e) {
+	if($.messageBox.value != "") {
+			sendReply();
+
+	}
 });
 
 function sendReply() {
@@ -202,11 +270,10 @@ function sendReply() {
 		right : '70dp',
 		borderRadius : 5,
 		font : {
-			fontSize : 14
+			fontSize : 14,
+			fontFamily:'Helvetica Neue'
 		}
 	});
-
-	//var msgCon
 
 	var circle = Ti.UI.createImageView({
 		width : 43,
@@ -222,6 +289,7 @@ function sendReply() {
 		height : '55dp',
 		top : '5dp',
 		bottom : '5dp',
+		opacity: 0,
 		//layout: 'horizontal',
 	});
 
@@ -229,10 +297,16 @@ function sendReply() {
 	row.add(circle);
 
 	$.chatWin.add(row);
+	
+	row.animate({
+		opacity: 100
+	});
 
 	$.chatWin.scrollToBottom();
+	
+	//setTimeout(showReply("How can I help you today?"), 1600);
 
-	showReply($.messageBox.value + " to you too!");
+	//showReply($.messageBox.value + " to you too!");
 	sendMessage("$.messageBox.value");
 	getChat();
 
@@ -249,18 +323,17 @@ function showReply(message) {
 		left : '70dp',
 		borderRadius : 5,
 		font : {
-			fontSize : 14
+			fontSize : 14,
+			fontFamily:'Helvetica Neue'
 		}
 	});
-
-	//var msgCon
 
 	var circle = Ti.UI.createImageView({
 		width : 43,
 		height : 43,
 		borderRadius : 21.5,
 		backgroundColor : '#aaa',
-		image: 'prof1.jpg',
+		image: profPic,
 		left : '10dp'
 	});
 
@@ -269,6 +342,7 @@ function showReply(message) {
 		height : '55dp',
 		top : '3dp',
 		bottom : '3dp',
+		opacity: 0,
 		//layout: 'horizontal',
 	});
 
@@ -276,13 +350,28 @@ function showReply(message) {
 	row.add(circle);
 
 	$.chatWin.add(row);
+	
+	row.animate({
+		opacity: 100
+	});
 
 	$.chatWin.scrollToBottom();
 }
-requestChat("John", "Phone Help");
 
+$.index.addEventListener('open', function(){
+	requestChat("John", "Phone Help");
+});
 
-
+function responceCheck (json) {
+	var str = '';
+	if (json.messages!='') {
+		if (json.messages[json.messages.length-1].from.nickname == 'system' )
+		{
+			str = json.messages[json.messages.length-1].text;
+		}
+	}
+	return (str!='') ? str : false;
+}
 
 //Chat start
 
