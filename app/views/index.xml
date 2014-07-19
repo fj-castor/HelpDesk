@@ -1,5 +1,12 @@
 <Alloy>
 	<Window class="container">
-		<Label id="label" onClick="doClick">Hello, World</Label>
+		<!-- <Label id="label" onClick="doClick">Hello, World</Label> -->
+		<ScrollView id="box">
+			<ScrollView class="chatWin" id="chatWin" layout="vertical" top="0dp" backgroundColor="#ffffff" height="85%"></ScrollView>
+			<View class="messageBoxContainer" id="messageBoxContainer" layout="horizontal" height="15%" bottom="0dp">
+				<TextArea class="messageBox" backgroundColor="#cccccc" width="80%" id="messageBox" height="100%" />
+				<Button class="btn" id="submitBtn" width="20%" title="Enter" height="100%" backgroundColor="#eeeeee"/>
+			</View>
+		</ScrollView>
 	</Window>
 </Alloy>
