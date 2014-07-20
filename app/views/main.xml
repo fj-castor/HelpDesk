@@ -11,7 +11,7 @@
 			</View>
 		</Window>
 	</NavigationWindow>
-	<Window class="win" navBarHidden='true' platform='android'>
+	<Window class="win" navBarHidden='true' platform='android' backgroundImage="bg.png">
 		<View class="container" layout="vertical">
 
 			<Button class="white-btn" id="start" title="Need Help?" color="#fff"></Button>

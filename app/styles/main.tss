@@ -9,6 +9,12 @@
 		fontSize: '30dp'
 	}
 }
+"#start[platform=android]": {
+	top: '190dp',
+	font: {
+		fontSize: '30dp'
+	}
+}
 ".white-btn": {
 	font: {
 		fontSize: '20dp',

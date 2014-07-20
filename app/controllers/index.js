@@ -49,7 +49,9 @@ function requestChat(name, subject, json) {
 				
 			
 			if($.chatTitle.text == 'Telus') {
-				showReply('How may I help you today?');
+				showReply('Hi my name is Rick and I will be your service rep today.');
+			} else if($.chatTitle.text == 'Dell') {
+				showReply('Hi my name is Mark, welcome to Dell service');
 			}
 			//else{
 			
@@ -222,9 +224,8 @@ function getTranscript() {
 			var serverReply = responceCheck(resp);
 			
 			if (serverReply) {
-				showReply(serverReply);
+				showReply("How may I help you today?");
 			}
-				
 			//Ti.API.warn("Chat complete" + resp);
 		},
 		// function called when an error occurs, including a timeout
